@@ -28,21 +28,45 @@
                   </nav>
 <input type="text" id="pnr">
 <button onclick=pnr()>GET STATUS</button>
+<div >
+<ul id="pnrdetails">
+
+</ul>
+</div>
 
  </body>
 <script>
 var pnr1=document.getElementById("pnr");
 function pnr(){
+  var response;
     let xhr = new XMLHttpRequest;
             xhr.addEventListener('load', function(){
-                var response = JSON.parse(this.responseText)
+                 response = JSON.parse(this.responseText)
                 console.log(response);
+                
+                var it=document.createElement("li");
+            it.innerHTML=`
+                DOJ:${response.doj}<br>
+  Total_passengers: ${response.total_passengers},<br>
+  From_station: ${response.from_station.name},<br>
+  To_station: ${response.to_station.name},<br>
+
+            `
+           
+            var pnr11=document.getElementById("pnrdetails");
+            pnr11.insertBefore(it,pnr11.childNodes[0]);
+
+
+
               })
+              
               //4503661923
               var url= "https://api.railwayapi.com/v2/pnr-status/pnr/"+pnr1.value+"/apikey/x5ca0cxi5x/" ;                
             console.log(url);
            xhr.open('GET', url )
             xhr.send();
+            
+           
 
 }
 </script>
