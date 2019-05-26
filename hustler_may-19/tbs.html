@@ -3,7 +3,7 @@
     <head>
             
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
+            <link rel="icon" href="https://cdn4.iconfinder.com/data/icons/mobile-device/512/train-metropolitan-railways-form-2-512.png">
             <!-- jQuery library -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
             <!-- Latest compiled JavaScript -->
@@ -11,6 +11,28 @@
             
             <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
             <!--<script src="app.js"></script>-->
+            <title>Get Trains</title>
+            <style>
+            body {
+              background-color: rgb(125, 177, 177);
+            }
+            
+            .search{
+              text-align: center;
+            }
+            .search-title{
+              text-align: center;
+              padding-top: 10px;
+              padding-bottom: 10px;
+            }
+            .search-result{
+              text-align: center;
+            }
+            .row {
+              text-align: center;
+            }
+            </style>
+
     </head>
     <body>
 
@@ -20,22 +42,26 @@
                         <a class="navbar-brand" href="#">Train Info</a>
                       </div>
                       <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">HOME</a></li>
-                        <li><a href="#">GET TRAIN</a></li>
-                        <li><a href="#">PNR STATUS</a></li>
-                        <li><a href="#">LIVE STATUS</a></li>
+                        <li class="active"><a href="index.html">HOME</a></li>
+                        <li><a href="tbs.html">GET TRAINS</a></li>
+                        <li><a href="pnrpage.html">PNR STATUS</a></li>
+                        <li><a href="livestatus.html">LIVE STATUS</a></li>
                       </ul>
                     </div>
                   </nav>
 
+                  
+                  <div class="search">
                   <form action="#" method="GET" onsubmit="return false">
-                    FROM:<br>
-                    <input type="text" name="from" id="from" placeholder="Source"><br>
-                    TO:<br>
+                    
+                    <h5 style="color: solid black "><b>FROM:</b></h5> 
+                    <input type="text" name="from" id="from" placeholder="Source">
+                    <br>
+                    <h5 style="color: solid black "><b>TO:</b></h5>
                     <input type="text" name="to" id="to" placeholder="Destination"><br>
-                    DATE:<br>
+                    <h5 style="color: solid black "><b>DATE:</b></h5>
                     <input type="date" name="date" id="date"><br>
-                    CLASS:<br>
+                    <h5 style="color: solid black "><b>CLASS:</b></h5>
                     <select>
                         <option id="option">SLEEPER</option>
                         <option id="option">AC</option>
@@ -44,17 +70,20 @@
                     <br>
                     <br>
                     <button onclick= fun() >Submit</button>
+                    <br>
                   </form> 
-
-                  <!--Search results-->
-                  <div id="train">
-
-
-                  </div>
+                </div> 
+                
+                <div class="search-title">
+                <h4 style="color: solid black "><b><i>Search Results</i></b></h4>
+                </div>
+                
+                <!--Search results-->
+                  <div calss="search-result" id="train">
+                     </div>
                   
-
-
     </body>
+
     <script>
       var dtToday = new Date();
     
@@ -69,37 +98,6 @@
       var minDate = year + '-' + month + '-' + day;
       document.getElementById('date').setAttribute('min', minDate)
     
-    /*var axios = require('axios');
-    
-      function fun() {
-                var from = document.getElementById('from').value;
-                var to = document.getElementById('to').value; 
-                var date = document.getElementById('date').value;
-                var clas = document.getElementById('option').value;
-                //var search = document.getElementById('submit')   
-                var dat= date.split("-");
-                var d=dat[2]+"-"+dat[1]+"-"+dat[0];
-                console.log(from);
-                console.log(to);
-                console.log(d);
-       var url= "https://api.railwayapi.com/v2/between/source/"+from+"/dest/"+to+"/date/"+d+"/apikey/x5ca0cxi5x" ;                
-       console.log(url);
-       
-      //making request 
-      axios.get(url)
-     .then(function (response) {
-      // handle success
-       console.log(response);
-      })
-      .catch(function (error) {
-       
-       console.log(error);
-       })
-       .finally(function () {
-       // always executed
-      })
-    } */
-          
       function fun() {
                 var from = document.getElementById('from').value;
                 var to = document.getElementById('to').value; 
@@ -143,7 +141,7 @@
                 { console.log('Train available');
                   for(let i=0;i<obj.total;i++)
                   {
-                  train_nav.innerHTML+='<div class="row" style=" background-color: white; margin: 10px auto; "> <div class="col-lg-3"> <p><b>'+ obj.trains[i].number +'</b></p> <p><b>'+ obj.trains[i].name +'</b></p> </div> <div class="col-lg-6"> <div class="row"> <div class="col-lg-4" align="center"><p>Departure</p><p>'+ obj.trains[i].src_departure_time +'</p></div> <div class="col-lg-4" align="center"><p>Travel Time</p> '+ obj.trains[i].travel_time +'</p> </div> <div class="col-lg-4" align="center"> <p>Arrival</p><p>'+ obj.trains[i].dest_arrival_time +'</p></div> </div> </div> </div>';
+                  train_nav.innerHTML+='<div class="row" style=" background-color: white; margin: 20px auto; "> <div class="col-lg-3"> <p><b>'+ obj.trains[i].number +'</b></p> <p><b>'+ obj.trains[i].name +'</b></p> </div> <div class="col-lg-6"> <div class="row"> <div class="col-lg-4" align="center"><p><b>Departure</b></p><p>'+ obj.trains[i].src_departure_time +'</p></div> <div class="col-lg-4" align="center"><p><b>Travel Time</b></p> '+ obj.trains[i].travel_time +'</p> </div> <div class="col-lg-4" align="center"> <p><b>Arrival</b></p><p>'+ obj.trains[i].dest_arrival_time +'</p></div> </div> </div> </div>';
                    }
                 }
                 else{
